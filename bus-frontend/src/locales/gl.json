@@ -1,0 +1,118 @@
+{
+    "headerbar": {
+        "title": "Kalaallit Peqqissartut ",
+        "colored": "Illuat",
+        "logout": "Anigit"
+    },
+    "breadcrumbs": {
+        "home": "Home",
+        "dashboard": "Sulisunut",
+        "about": "Uagut pilluta",
+        "login": "Isertarfik",
+        "register": "Atuisunik nalunaarsuiffik",
+        "approve": "Atuisunik akuersineq",
+        "hospitals": "Napparsimaviit",
+        "hospitalform": "Nakorsiarnissaq",
+        "confirmform": "Paasissutissanik akuersineq",
+        "taxi": "Taxa",
+        "translators": "Oqalutsinut",
+        "rides": "Angallassinerit nalunaarsukkat",
+        "drivers": "Bussertunut",
+        "ridestoday": "Ullumi bussertussat",
+        "edit": "Naqqiineq",
+        "schedules": "Bussit pilersaarutaat"
+    },
+    "hospitals": {
+        "whereto": "Sumunnassavit?",
+        "para1": "Napparsimavimmut sorlermukarnissat toqqarlugu nakorsiarnissarnik nalunaaruteqarnerit aallartissavat. Region Hovedstadenimi napparsimaviit, kalaallit peqqissartut atortagaat ataani takusinnaavatit. Napparsimavinni pineqartuni naliginnaasumik suut suliarineqartarnersut aamma takusinnaavatit.",
+        "para2": "Napparsimavimmik toqqaareeruit immersugassamut ingerlatinneqassaatit. Tassani nakorsiarnissaut pillugu paasissutissat immersussavatit. Taassuma kingorna immersukkavit eqqortuunerat akuerissallugu periarfissinneqassaatit, Rigshospitalimukassaguillu tassani aamma paasissavat bussit ilaaffissatit qassinut aallassanersut."
+    },
+    "hospitalform": {
+        "para0": "{hospital}imukassallutit toqqarpat.",
+        "para1": "Nakorsiarnissat pillugu paasissutissat immersussavatit. Qanoq ateqarnerlutit, kinguliat ilanngutinngikkaluarlugu allassvat. Qassimi ineqarnerlutit aamma narkorsiarnissavit ullua, piffissaa napparsimmavimmilu immikkoortumi sumiinnersoq ilanngullugit immersussavatit. Naggataagut oqalutsimik pisariaqartitsinerlutit nalunaarutigissavat.",
+        "para2": "Immersugassat tamakkerukkit ingerlaqqissaatit",
+        "para3": "Kalaallit Peqqissartut Illuannut utertussaasimaguit 'Uterit' tuussavat"
+    },
+    "formular": {
+        "heading": "Nakorsiarnissat pillugu",
+        "name": "Atit",
+        "room": "Inivit normua",
+        "appDate": "Nakorsiarfissavit ullua",
+        "appTime": "Piffissaq",
+        "department": "Napparsimmavimmi immikkoortoq",
+        "desc": "Napparsimmaviliarnerup siunertaa CPR normulu",
+        "placeholder": "Napparsimmavimmi peqqissartoq suniarpa? CPR nr. uani ilanngutissaaq",
+        "translator": "Oqalutsimik pisariaqartitsivit?",
+        "radioY": "Aap",
+        "radioN": "Naamik",
+        "submit": "Ingerlaqqigit",
+        "back": "Uterit",
+        "phone": "Tlf. normu"
+    },
+    "confirm": {
+        "para1": "Paasissutissat immersorsimasatit qimerloorluakkit, tamarmillu kukkuneqarsimanngippata akueralugit nassiutikkit.",
+        "para2": "Malugiuk Peqqissartut Illuanniit aallarnissarnut piffissaq naatsortaratsigu, napparsimavimmiinnissaq minuttinik 30-nik sioqqullugu illumiit aallareersimanissaq anguniarlugu",
+        "name": "Peqqissartup aqqa",
+        "room": "Inaata normua",
+        "appDate": "Nakorsiarfissap ullua",
+        "appTime": "Piffissaq",
+        "hospital": "Napparsimavik",
+        "department": "Napparsimavimmi immikkoortoq",
+        "desc": "Napparsimaviliarnerup siunertaa CPR normulu",
+        "placeholder": "Napparsimavimmi peqqissartoq suniarpa? CPR nr. uani ilanngutissaaq",
+        "translator": "Oqalutsimik pisariaqartitsiva?",
+        "bustime": "Bussit aallarfissaat",
+        "confirm": "Akuerikkit",
+        "edit": "Naqqikkit",
+        "back": "Uterit",
+        "phone": "Tlf. normu",
+        "heading": "Paasissutissat akuerikkit",
+        "hasTaxi": "Taxamik inniminniissunneqarpoq"
+    },
+    "rides": {
+        "heading": "Ullumi bussertussat",
+        "bustime": "Bussit aallarfissaat",
+        "name": "Ateq",
+        "room": "Inip normua"
+    },
+    "taxi": {
+        "heading": "Taxamik pisariaqartitsisut",
+        "name": "Ateq",
+        "room": "Inip normua",
+        "phone": "Tlf. normu",
+        "appDate": "Nakorsiarfissap ullua",
+        "appTime": "Piffissaq",
+        "hospital": "Napparsimavik",
+        "department": "Napparsimavimmi immikkoortoq",
+        "hasTaxi": "Taxassaqarpoq",
+        "shiftTaxi": "Inniminniineq",
+        "cancel": "Annuller",
+        "order": "Bestil",
+        "today": "Ullumi",
+        "tomorrow": "Aqagu"
+        
+    },
+    "schedules": {
+        "heading": "Bussit angalanerannut pilersaarutit",
+        "toRiget": "Rigshospitalimut",
+        "toDgp": "Peqqissartut illuannut",
+        "Mandag": "Ataasinngorneq",
+        "Tirsdag": "Marlunngorneq",
+        "Onsdag": "Pingasunngorneq",
+        "Torsdag": "Sisamanngorneq",
+        "Fredag": "Tallimanngorneq"
+    },
+    "days": {
+        "Mandag": "Ataasinngorneq",
+        "Tirsdag": "Marlunngorneq",
+        "Onsdag": "Pingasunngorneq",
+        "Torsdag": "Sisamanngorneq",
+        "Fredag": "Tallimanngorneq"
+    },
+    "homepage": {
+    "staffTitle": "Sulisunut",
+    "patientTitle": "Peqqissartunut",
+    "patientDescription": "Napparsimmaviliarnissat nalunaarutigiuk."
+  }
+
+}

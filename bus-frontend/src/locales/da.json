@@ -1,0 +1,118 @@
+{
+    "headerbar": {
+        "title": "dgp ",
+        "colored": "Bus",
+        "logout": "Log ud"
+    },
+    "breadcrumbs": {
+        "home": "Home",
+        "dashboard": "For ansatte",
+        "about": "Om",
+        "login": "Log ind",
+        "register": "Brugerregisterring",
+        "approve": "Brugergodkendelse",
+        "hospitals": "Hospitaler",
+        "hospitalform": "Lægeaftale",
+        "confirmform": "Bekræft oplysninger",
+        "taxi": "Taxa",
+        "translators": "For tolke",
+        "rides": "Registrerede kørsler",
+        "drivers": "For chauffører",
+        "ridestoday": "Dagens kørsler",
+        "edit": "Rediger",
+        "schedules": "Køreplaner"
+    },
+    "hospitals": {
+        "whereto": "Hvor skal du hen?",
+        "para1": "Du starter din registrering af din lægeaftale, med at vælge hvilket hospital du skal til. Du kan se de hospitaler i Region Hovedstaden, hvor patienter fra Grønland modtager behandling, på kortene nedenunder. På kortene kan du også se hvilke behandlingsformer, der bliver udført på disse hospitaler.",
+        "para2": "Du bliver ført videre til en formular, når du har valgt dit hospital. På formularen skal du udfylde oplysninger om din lægeaftale. Herefter får du en mulighed for at bekræfte de oplysninger du har indtastet, samt bussens afgang hvis du skal til Rigshospitalet."
+    },
+    "hospitalform": {
+        "para0": "Du har valgt at du skal til {hospital}",
+        "para1": "Du skal udfylde oplysninger om din lægeaftale. Du skal udfylde navn og udelad gerne dit efternavn. Dit værelsesnummer, tid og dato for din aftale skal du også skrive, sammen med hvilken afdeling du skal til. Til sidst skal du markere om du har brug for en tolk.",
+        "para2": "Tryk på 'Videre' når du er færdig.",
+        "para3": "Skulle du i stedet bestille kørsel tilbage til Patienthjemmet skal du trykke på 'tilbage'."
+    },
+    "formular": {
+        "heading": "Om din lægeaftale",
+        "name": "Navn",
+        "room": "Værelsesnummer",
+        "appDate": "Dato for lægeaftale",
+        "appTime": "Tidspunkt",
+        "department": "Afdeling på hospitalet",
+        "desc": "Formålet med lægeaftale og CPR nr.",
+        "placeholder": "Hvad skal patienten på hospitalet? CPR skal også skrives her",
+        "translator": "Har du brug for en tolk?",
+        "radioN": "Nej",
+        "radioY": "Ja",
+        "submit": "Videre",
+        "back": "Tilbage",
+        "phone": "Tlf. nr."
+    },
+    "confirm": {
+        "para1": "Se godt efter om du har udfyldt formularen rigtigt og bekræft oplysningerne ved at sende formularen.",
+        "para2": "Vær opmærksom på at vi beregner tidspunktet for buskørsel, for at sikre afgnag fra patienthjemmet 30 minutter før din aftale.",
+        "name": "Navn",
+        "room": "Værelsesnummer",
+        "appDate": "Dato for lægeaftale",
+        "appTime": "Tidspunkt",
+        "hospital": "Hospital",
+        "department": "Afdeling på hospitalet",
+        "desc": "Formålet med lægeaftale og CPR nr.",
+        "placeholder": "Hvad skal patienten på hospitalet? CPR skal også skrives her",
+        "translator": "Har du brug for en tolk?",
+        "bustime": "Bussens afgang",
+        "confirm": "Send",
+        "edit": "Rediger",
+        "back": "Tilbage",
+        "phone": "Tlf. nr.",
+        "heading": "Bekræft dine oplysninger",
+        "hasTaxi": "Bestilt taxa"
+    },
+    "rides": {
+        "heading": "Dagens buskørsler",
+        "bustime": "Afgangstid",
+        "name": "Navn",
+        "room": "Værelsesnummer"
+    },
+    "taxi": {
+        "heading": "Patienter med behov for taxa",
+        "name": "Navn",
+        "room": "Værelsesnummer",
+        "phone": "Tlf. nr.",
+        "appDate": "Dato for lægeaftale",
+        "appTime": "Tidspunkt",
+        "hospital": "Hospital",
+        "department": "Afdeling på hospitalet",
+        "hasTaxi": "Har taxa",
+        "shiftTaxi": "Skift",
+        "cancel": "Annuller",
+        "order": "Bestil",
+        "today": "I dag",
+        "tomorrow": "I morgen" 
+        
+    },
+    "days": {
+        "Mandag": "Mandag",
+        "Tirsdag": "Tirsdag",
+        "Onsdag": "Onsdag",
+        "Torsdag": "Torsdag",
+        "Fredag": "Fredag"
+    },
+    "schedules": {
+        "heading": "Køreplaner",
+        "toRiget": "Til Rigshospitalet",
+        "toDgp": "Til Patienthjemmet",
+        "Mandag": "Mandag",
+        "Tirsdag": "Tirsdag",
+        "Onsdag": "Onsdag",
+        "Torsdag": "Torsdag",
+        "Fredag": "Fredag"
+    },
+    "homepage": {
+    "staffTitle": "Personaleadgang",
+    "patientTitle": "Patientadgang",
+    "patientDescription": "Registrer din lægeaftale."
+  }
+
+}
