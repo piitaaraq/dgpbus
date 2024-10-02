@@ -34,4 +34,5 @@ urlpatterns = [
     # Admin approval endpoint
     path('api/approve-users/', AdminApproveUserView.as_view(), name='approve_user'),  
     path('api/approve-users/<int:staff_id>/', AdminApproveUserView.as_view(), name='approve_user_post'),
+
 ]

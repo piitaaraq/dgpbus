@@ -108,12 +108,7 @@ class Ride(models.Model):
     departure_location = models.CharField(max_length=255)
     destination = models.ForeignKey('Hospital', on_delete=models.CASCADE)
     users = models.ManyToManyField('Patient', related_name='rides')
-    status = models.CharField(max_length=50, choices=[
-        ('scheduled', 'Scheduled'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled')
-    ], default='scheduled')
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Ride to {self.destination} on {self.date} at {self.departure_time}"

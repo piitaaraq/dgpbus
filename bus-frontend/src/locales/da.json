@@ -22,6 +22,19 @@
         "edit": "Rediger",
         "schedules": "Køreplaner"
     },
+    "driver": {
+        "heading": "Checkliste til kørsler",
+        "departureTime": "Afgang",
+        "hospital": "Hospital",
+        "viewPassengers": "Vis passagerer",
+        "viewButton": "Vis",
+        "passengersHeading": "Passagerer",
+        "name": "Navn",
+        "room": "Værelsesnummer",
+        "status": "Status",
+        "checkedIn": "Med",
+        "notCheckedIn": "Ikke med"
+    },
     "hospitals": {
         "whereto": "Hvor skal du hen?",
         "para1": "Du starter din registrering af din lægeaftale, med at vælge hvilket hospital du skal til. Du kan se de hospitaler i Region Hovedstaden, hvor patienter fra Grønland modtager behandling, på kortene nedenunder. På kortene kan du også se hvilke behandlingsformer, der bliver udført på disse hospitaler.",

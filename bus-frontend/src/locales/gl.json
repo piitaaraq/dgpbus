@@ -22,6 +22,20 @@
         "edit": "Naqqiineq",
         "schedules": "Bussit pilersaarutaat"
     },
+    "driver": {
+        "heading": "Ilaasussanik nalunaarsuineq",
+        "departureTime": "Aallarfik",
+        "hospital": "Napparsimavik",
+        "viewPassengers": "Ilaasussat nuisikkit",
+        "viewButton": "Nuisikkit",
+        "passengersHeading": "Ilaasussat",
+        "name": "Ateq",
+        "room": "Inip normua",
+        "status": "Ilaava?",
+        "checkedIn": "Aap",
+        "notCheckIn": "Naamik"
+    },
+
     "hospitals": {
         "whereto": "Sumunnassavit?",
         "para1": "Napparsimavimmut sorlermukarnissat toqqarlugu nakorsiarnissarnik nalunaaruteqarnerit aallartissavat. Region Hovedstadenimi napparsimaviit, kalaallit peqqissartut atortagaat ataani takusinnaavatit. Napparsimavinni pineqartuni naliginnaasumik suut suliarineqartarnersut aamma takusinnaavatit.",

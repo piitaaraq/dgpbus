@@ -155,4 +155,19 @@ class RideViewSet(viewsets.ModelViewSet):
         serialized_rides = RidePublicSerializer(rides, many=True)  # Use the serializer without description
         return Response(serialized_rides.data)
 
+    @action(detail=False, methods=['get'])
+    @permission_classes([IsAuthenticated, IsStaffOrAdmin])  # Ensure drivers are authenticated
+    def driver_view(self, request):
+        today = date.today()
+        rides_today = Ride.objects.filter(date=today)
+        serializer = RidePublicSerializer(rides_today, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['patch'])
+    @permission_classes([IsAuthenticated])
+    def toggle_status(self, request, pk=None):
+        ride = self.get_object()
+        ride.status = not ride.status
+        ride.save()
+        return Response({'status': ride.status})
 
