@@ -222,7 +222,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // Check if the route requires staff permissions
   if (to.matched.some(record => record.meta.requiresStaff)) {
-    const token = localStorage.getItem('token');  // Get the token from localStorage
+    const token = sessionStorage.getItem('token');  // Get the token from localStorage
     if (!token) {
       // If no token is found, redirect to the login page
       return next('/login');

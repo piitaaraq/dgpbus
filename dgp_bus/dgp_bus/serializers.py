@@ -156,6 +156,7 @@ class PatientPublicSerializer(serializers.ModelSerializer):
 
 
 class RideSerializer(serializers.ModelSerializer):
+    hospital_name = serializers.CharField(source='destination.hospital_name', read_only=True)
     patients = PatientSerializer(many=True, source='users')  
 
     class Meta:

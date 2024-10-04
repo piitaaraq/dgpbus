@@ -67,7 +67,12 @@ export default {
     methods: {
         async fetchRides() {
             try {
+                const token = sessionStorage.getItem('token'); // or sessionStorage if you're using it
                 const response = await axios.get('http://localhost:8000/api/rides/driver_view/', {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // Attach the JWT token
+                    }
+
                 });
                 console.log(response.data);
                 this.rides = response.data;
@@ -77,7 +82,13 @@ export default {
         },
         async viewPassengers(rideId) {
             try {
-                const response = await axios.get(`http://localhost:8000/api/rides/${rideId}/`);
+                const token = sessionStorage.getItem('token'); // or sessionStorage if you're using it
+                const response = await axios.get(`http://localhost:8000/api/rides/${rideId}/`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // Attach the JWT token
+                    }
+
+                });
                 this.selectedRide = response.data;
             } catch (error) {
                 console.error('Error fetching passengers:', error);
@@ -85,7 +96,13 @@ export default {
         },
         async toggleStatus(patient) {
             try {
-                const response = await axios.patch(`http://localhost:8000/api/rides/${patient.id}/toggle_status/`);
+                const token = sessionStorage.getItem('token'); // or sessionStorage if you're using it
+                const response = await axios.patch(`http://localhost:8000/api/rides/${patient.id}/toggle_status/`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // Attach the JWT token
+                    }
+
+                });
                 patient.status = response.data.status;  // Update status in the frontend
             } catch (error) {
                 console.error('Error toggling status:', error);

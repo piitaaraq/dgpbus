@@ -91,15 +91,19 @@ export default {
                 return timeA - timeB; // If dates are equal, sort by time
             });
         },
-
         async fetchPatients() {
             try {
-                const response = await axios.get('http://localhost:8000/api/patients/translator-view/');
+                const token = sessionStorage.getItem('token'); // or sessionStorage if you're using it
+                const response = await axios.get('http://localhost:8000/api/patients/translator-view/', {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // Attach the JWT token
+                    }
+                });
                 this.patients = response.data;
             } catch (error) {
                 console.error('Error fetching patients:', error);
             }
-        }
+        },
     },
     mounted() {
         this.fetchPatients();

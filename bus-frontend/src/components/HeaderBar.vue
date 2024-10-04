@@ -1,145 +1,116 @@
 <template>
-  <nav class="navbar is-flex is-align-items-center mb-4" role="navigation" aria-label="main navigation">
+  <nav class="navbar pb-3" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <!-- Logo -->
+      <router-link to="/" class="navbar-item">
+        <img src="@/assets/logo.png" alt="Logo" class="logo">
+      </router-link>
 
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <router-link to="/" class="navbar-item">
-          <div class="header-logo">
-            <img src="@/assets/logo.png" alt="Logo" class="logo">
-          </div>
-        </router-link>
+      <!-- Burger icon for mobile -->
+      <a role="button" class="navbar-burger" :class="{ 'is-active': isActive }" @click="toggleMenu" aria-label="menu"
+        aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <!-- Navbar menu -->
+    <div :class="{ 'is-active': isActive }" class="navbar-menu">
+      <!-- Navbar start (left side) -->
+      <div class="navbar-start">
       </div>
-      <div class="actions-container">
-        <div class="navbar-item">
-          <div class="language-selector is-flex is-align-items-center">
-            <font-awesome-icon :icon="['fas', 'globe']" class="icon m-1" />
-            <select @change="changeLanguage($event)" class="language-select">
-              <option value="gl">Kalaallisut</option>
-              <option value="da">Dansk</option>
-            </select>
+
+      <!-- Navbar end (right side) -->
+      <div class="navbar-end">
+        <button class="button is-light bus-icon" @click="toRegistration">
+          <font-awesome-icon :icon="['fas', 'bus']" />
+          Bestil kørsel
+        </button>
+        <!-- Language selection as a dropdown using Bulma's has-dropdown class -->
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <font-awesome-icon :icon="['fas', 'language']" /> <!-- Language icon -->
+          </a>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item" @click="setLanguage('gl')">Kalaallisut</a>
+            <a class="navbar-item" @click="setLanguage('da')">Dansk</a>
           </div>
         </div>
 
         <!-- Show logout button only if the user is authenticated -->
         <div class="navbar-item" v-if="isAuthenticated">
-          <button class="logout-button" @click="handleLogout">
+          <button class="button is-light" @click="handleLogout">
             <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="logout-icon" />
             {{ $t('headerbar.logout') }}
           </button>
         </div>
-
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth';  // Import the Pinia auth store
+import { useAuthStore } from '@/stores/auth';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'; // Import FontAwesome
 
 export default {
-  name: 'HeaderBar',
-
-
+  components: {
+    FontAwesomeIcon, // Register FontAwesome component
+  },
+  data() {
+    return {
+      isActive: false,
+      currentLanguage: this.$i18n.locale, // Track the current language
+    };
+  },
   computed: {
     isAuthenticated() {
       const authStore = useAuthStore();
       return authStore.isAuthenticated;
     },
   },
-
   methods: {
     handleLogout() {
       const authStore = useAuthStore();
       authStore.logout();
       this.$router.push({ name: 'LoginPage' });
     },
-
-    changeLanguage(event) {
-      this.$i18n.locale = event.target.value;
+    toRegistration() {
+      this.$router.push({ name: 'HospitalList' });
     },
-
+    setLanguage(lang) {
+      this.$i18n.locale = lang;
+      this.currentLanguage = lang;
+    },
     toggleMenu() {
-      this.isActive = !this.isActive; // Toggle the burger menu
+      this.isActive = !this.isActive;
     },
-  },
-
-  mounted() {
-    const authStore = useAuthStore();
-    authStore.restoreToken();
   },
 };
 </script>
 
 <style scoped>
-/* Navbar and item styling */
-.navbar {
-  padding: 1rem;
-}
-
-.navbar-end {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-
-.navbar-item:hover {
-  background-color: transparent;
-  /* Remove background highlight on hover */
-  box-shadow: none;
-  /* Remove any box-shadow on hover */
-}
-
+/* Logo Styling */
 .logo {
   max-height: 50px;
-  margin-right: 1rem;
 }
 
-/* Actions container for language selector and logout button */
-.actions-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5rem;
+/* Additional styling as necessary */
+.language-button.is-active {
+  color: #00A5CF;
 }
 
-.language-select {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Burger active state styling */
+.navbar-burger.is-active span {
+  background-color: #00A5CF;
 }
 
-.logout-button {
-  background-color: #f4f4f4;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+.logout-icon {
+  margin-right: 0.5rem;
 }
 
-.logout-button:hover {
-  background-color: #e0e0e0;
-}
-
-/* Center items on smaller screens without stacking */
-@media (max-width: 768px) {
-  .navbar-end {
-    justify-content: center;
-    /* Center items horizontally */
-    flex-wrap: wrap;
-    /* Ensure items wrap if needed, but don't stack by default */
-  }
-
-  .navbar-item {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-    /* Control the spacing between items to avoid stacking */
-  }
-
-  .logo {
-    margin-right: 0.5rem;
-    /* Reduce margin to keep everything in one line */
-  }
+.bus-icon {
+  margin-right: 0.5rem;
 }
 </style>

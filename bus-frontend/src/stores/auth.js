@@ -6,8 +6,8 @@ export const useAuthStore = defineStore({
   id: 'auth',  // Store ID
 
   state: () => ({
-    token: localStorage.getItem('token') || null,  // Initialize token from localStorage
-    isAuthenticated: !!localStorage.getItem('token'),  // Set isAuthenticated based on token existence
+    token: sessionStorage.getItem('token') || null,  // Initialize token from sessionStorage
+    isAuthenticated: !!sessionStorage.getItem('token'),  // Set isAuthenticated based on token existence
   }),
 
   actions: {
@@ -21,23 +21,23 @@ export const useAuthStore = defineStore({
 
         this.token = response.data.access;  // Set the JWT token in the store
         this.isAuthenticated = true;  // Mark the user as authenticated
-        localStorage.setItem('token', this.token);  // Store token in localStorage
+        sessionStorage.setItem('token', this.token);  // Store token in sessionStorage
       } catch (error) {
         console.error('Login failed:', error);
         throw new Error('Login failed. Please check your credentials.');
       }
     },
 
-    // Handle logout by clearing the token from state and localStorage
+    // Handle logout by clearing the token from state and sessionStorage
     logout() {
       this.token = null;  // Clear the token from the store
       this.isAuthenticated = false;  // Mark the user as logged out
-      localStorage.removeItem('token');  // Remove token from localStorage
+      sessionStorage.removeItem('token');  // Remove token from sessionStorage
     },
 
-    // Restore the token from localStorage when the app is reloaded
+    // Restore the token from sessionStorage when the app is reloaded
     restoreToken() {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       if (token) {
         this.token = token;  // Restore token to the store
         this.isAuthenticated = true;  // Mark the user as authenticated

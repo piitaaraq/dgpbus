@@ -1,5 +1,5 @@
 <template>
-    <nav v-if="breadcrumbs.length" class="breadcrumb  is-large" aria-label="breadcrumbs">
+    <nav v-if="breadcrumbs.length" class="breadcrumb is-right" aria-label="breadcrumbs">
         <ul>
             <li v-for="(crumb, index) in breadcrumbs" :key="index" :class="{ 'is-active': isActive(index) }">
                 <!-- If the crumb has a link, make it clickable; otherwise, just display the name -->

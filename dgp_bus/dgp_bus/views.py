@@ -160,7 +160,7 @@ class RideViewSet(viewsets.ModelViewSet):
     def driver_view(self, request):
         today = date.today()
         rides_today = Ride.objects.filter(date=today)
-        serializer = RidePublicSerializer(rides_today, many=True)
+        serializer = RideSerializer(rides_today, many=True)
         return Response(serializer.data)
 
     @action(detail=True, methods=['patch'])

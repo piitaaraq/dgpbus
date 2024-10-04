@@ -33,7 +33,7 @@
         "room": "Inip normua",
         "status": "Ilaava?",
         "checkedIn": "Aap",
-        "notCheckIn": "Naamik"
+        "notCheckedIn": "Naamik"
     },
 
     "hospitals": {
