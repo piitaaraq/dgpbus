@@ -1,21 +1,29 @@
 <template>
   <div class="homepage-container container">
+    <h1 class="title is-1 is-size-3-mobile has-text-centered">{{ $t("homepage.heading") }} </h1>
     <div class="home-cards">
       <div class="card" @click="goToStaffArea">
-        <h2 class="title is-3">{{ $t('homepage.staffTitle') }}</h2>
+        <h3 class="title is-3 is-size-4-mobile has-text-success">{{ $t('homepage.staffTitle') }}</h3>
       </div>
 
       <div class="card" @click="goToPatientArea">
-        <h2 class="title is-3">{{ $t('homepage.patientTitle') }}</h2>
+        <h3 class="title is-3 is-size-4-mobile has-text-success">{{ $t('homepage.patientTitle') }}</h3>
       </div>
 
     </div>
+    <CookieConsent />
+
   </div>
 </template>
 
 <script>
+import CookieConsent from '@/components/CookieConsent.vue';
+
 export default {
   name: 'HomePage',
+  components: {
+    CookieConsent,
+  },
   methods: {
     goToStaffArea() {
       this.$router.push({ name: 'AdminDashboard' });
@@ -30,16 +38,15 @@ export default {
 <style scoped>
 .homepage-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 80vh;
-  /* Adjust to avoid scrollbar */
 }
 
 .home-cards {
   display: flex;
   flex-direction: row;
-  /* Cards side by side on larger screens */
   gap: 20px;
   justify-content: center;
   align-items: stretch;
@@ -52,18 +59,20 @@ export default {
   min-width: 250px;
   height: 170px;
   cursor: pointer;
-  background-color: #f4f4f4;
   border-radius: 8px;
-  transition: background-color 0.2s;
+  transition: border-color 0.2s;
+  background-color: #34495E;
 }
 
 .card:hover {
-  background-color: #e0e0e0;
+  background-color: #2C3E50;
 }
 
 .title {
   margin: 2rem;
+  font-weight: 400;
 }
+
 
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
@@ -74,17 +83,13 @@ export default {
 
   .card {
     width: 100%;
-    /* Cards take full width on smaller screens */
     max-width: 300px;
-    /* Optional: limit max width if needed */
   }
 }
 
 @media (max-width: 480px) {
-
   .card {
     min-width: 200px;
-    /* Further reduce card width for smaller screens */
     height: 150px;
   }
 }

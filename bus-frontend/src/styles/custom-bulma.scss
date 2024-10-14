@@ -2,31 +2,40 @@
 // @import "~bulma/sass/utilities/functions";
 
 // custom colors
-$primary-color: #00A5CF; // Primary Color
-$secondary-color: #25A18E; // Accent Color 1
-$tertiary-color: #004E64; // Accent Color 2
-$success-color: #62cf93; // Secondary Color
-$warning-color: #f1b647; // Tertiary Color
+$deepslate-color: #2C3E50; // This dark, moody color is perfect for elements that need strong visual weight, giving your site that Nordic noir touch. A deep background for the navbar can ground the design, while using it for headings and buttons gives a sense of boldness and elegance.
+$mutedblue-color: #34495E; // This color can be used for card backgrounds or hover states on buttons and links. It adds subtle depth without distracting from the core content, keeping things visually interesting but still restrained and clean.
+$fjord-color: #5DAF83; // Call-to-action buttons, accent borders, highlights, subtle icons 
+$seamist-color: #BDC3C7; // This light, almost ethereal shade works as a perfect neutral background for large sections, giving a clean and calm canvas to the content. It can be used for form fields, cards, or even alternating sections on a long page to break the monotony
+$bg-color: #ECF0F1; // background
 
 @use "bulma/sass" with (
 
-    $primary: $primary-color,
-    $info: $secondary-color,
-    $link: $tertiary-color,
-    $success: $success-color,
-    $warning: $warning-color,
-    $body-background-color: #FFFFFF,
+    $primary: $deepslate-color,
+    $info: $mutedblue-color,
+    $link: $fjord-color,
+    $success: $seamist-color,
+    // $warning: $warning-color,
+    $body-background-color: #ECF0F1,
     $breadcrumb-item-color: #00A5CF,
     $breadcrumb-item-active-color: #25A18E,
     );
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&family=Roboto:wght@400&display=swap");
 
 
 html, body, #app {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+.table {
+  background-color: #ECF0F1;
+}
+
+body {
+  background-color: #ECF0F1;
+  
 }
 // Import Bulma with the customized variables
 // @import "~bulma/bulma";

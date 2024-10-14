@@ -1,3 +1,4 @@
+dgpbusses/
 bus-frontend/node_modules/.cache/
 dgp_bus/dgp_bus/__pycache__/
-
+dgp_bus/venv/

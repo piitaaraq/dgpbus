@@ -2,7 +2,16 @@
     "headerbar": {
         "title": "Kalaallit Peqqissartut ",
         "colored": "Illuat",
-        "logout": "Anigit"
+        "logout": "Anigit",
+        "newRide": "Inniminniigit",
+        "showRides": "Ullumi angallassassat"
+    },
+    "cookies": {
+        "header": "Cookiesinik atuineq",
+        "message": "Nittartakkamik atuinerit oqinnerutinniarlugu cokkies atorpagut. Ingerlaqqinnerni taakkunannga atuinerput akuerissavat.",
+        "accept": "Akueriuk",
+        "decline": "Naameeruk",
+        "readmore": "Paasisaqarnerugit..."
     },
     "breadcrumbs": {
         "home": "Home",
@@ -20,7 +29,8 @@
         "drivers": "Bussertunut",
         "ridestoday": "Ullumi bussertussat",
         "edit": "Naqqiineq",
-        "schedules": "Bussit pilersaarutaat"
+        "schedules": "Bussit pilersaarutaat",
+        "privacy": "Privatlivspolitik"
     },
     "driver": {
         "heading": "Ilaasussanik nalunaarsuineq",
@@ -50,6 +60,8 @@
     "formular": {
         "heading": "Nakorsiarnissat pillugu",
         "name": "Atit",
+        "accommodation": "Inissinneqarfik",
+        "selectAccommodation": "Sumi ineqarpit?",
         "room": "Inivit normua",
         "appDate": "Nakorsiarfissavit ullua",
         "appTime": "Piffissaq",
@@ -64,9 +76,10 @@
         "phone": "Tlf. normu"
     },
     "confirm": {
-        "para1": "Paasissutissat immersorsimasatit qimerloorluakkit, tamarmillu kukkuneqarsimanngippata akueralugit nassiutikkit.",
+        "para1": "Paasissutissat immersorsimasatit qimerloorluakkit, tamarmillu kukkuneqarsimanngippata akueralugit nassiutikkit. Quleriit arlaat aappalaartumik qalipaateqarpat, isumaqarpoq paasissutissat tamaasa immersorsimanngikkitit. Taamaammat uterlutit immersugassaq naammasseqqaassavat.",
         "para2": "Malugiuk Peqqissartut Illuanniit aallarnissarnut piffissaq naatsortaratsigu, napparsimavimmiinnissaq minuttinik 30-nik sioqqullugu illumiit aallareersimanissaq anguniarlugu",
         "name": "Peqqissartup aqqa",
+        "accommodation": "Inissinneqarfik",
         "room": "Inaata normua",
         "appDate": "Nakorsiarfissap ullua",
         "appTime": "Piffissaq",
@@ -92,6 +105,7 @@
     "taxi": {
         "heading": "Taxamik pisariaqartitsisut",
         "name": "Ateq",
+        "accommodation": "Inissinneqarfik",
         "room": "Inip normua",
         "phone": "Tlf. normu",
         "appDate": "Nakorsiarfissap ullua",
@@ -124,6 +138,7 @@
         "Fredag": "Tallimanngorneq"
     },
     "homepage": {
+    "heading": "Kalaallit Peqqissartut Illuat · Peqqissartunik angallassineq",
     "staffTitle": "Sulisunut",
     "patientTitle": "Peqqissartunut",
     "patientDescription": "Napparsimmaviliarnissat nalunaarutigiuk."

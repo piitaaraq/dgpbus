@@ -9,6 +9,7 @@
                 <tr>
                     <th>{{ $t("taxi.name") }}</th>
                     <th>{{ $t("taxi.phone") }}</th>
+                    <th>{{ $t("taxi.accommodation") }}</th>
                     <th>{{ $t("taxi.appDate") }}</th>
                     <th>{{ $t("taxi.appTime") }}</th>
                     <th>{{ $t("taxi.hospital") }}</th>
@@ -21,6 +22,7 @@
                 <tr v-for="patient in todaysPatients" :key="patient.id" :class="{ 'has-taxi': patient.has_taxi }">
                     <td>{{ patient.name }}</td>
                     <td>{{ patient.phone_no }}</td>
+                    <td>{{ patient.accommodation.name }} </td>
                     <td>{{ formatDate(patient.appointment_date) }}</td>
                     <td>{{ formatTime(patient.appointment_time) }}</td>
                     <td>{{ patient.hospital_name }}</td>
@@ -43,6 +45,7 @@
                 <tr>
                     <th>{{ $t("taxi.name") }}</th>
                     <th>{{ $t("taxi.phone") }}</th>
+                    <th>{{ $t("taxi.accommodation") }}</th>
                     <th>{{ $t("taxi.appDate") }}</th>
                     <th>{{ $t("taxi.appTime") }}</th>
                     <th>{{ $t("taxi.hospital") }}</th>
@@ -55,6 +58,7 @@
                 <tr v-for="patient in tomorrowsPatients" :key="patient.id" :class="{ 'has-taxi': patient.has_taxi }">
                     <td>{{ patient.name }}</td>
                     <td>{{ patient.phone_no }}</td>
+                    <td>{{ patient.accommodation.name }}</td>
                     <td>{{ formatDate(patient.appointment_date) }}</td>
                     <td>{{ formatTime(patient.appointment_time) }}</td>
                     <td>{{ patient.hospital_name }}</td>

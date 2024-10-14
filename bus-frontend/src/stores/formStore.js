@@ -5,6 +5,7 @@ export const useFormStore = defineStore('form', {
   state: () => ({
     formData: {
       name: '',
+      accommodation: '',
       room: '',
       appointment_date: '',
       appointment_time: '',
@@ -12,6 +13,8 @@ export const useFormStore = defineStore('form', {
       description: '',
       needs_translator: false,
       busTime: null,  // Ensure busTime is initialized
+      hospital: null, // Add hospital to store hospital ID
+
     },
   }),
   actions: {

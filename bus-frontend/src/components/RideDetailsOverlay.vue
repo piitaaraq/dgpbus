@@ -2,7 +2,8 @@
     <div class="overlay" v-if="ride">
         <div class="overlay-content">
             <!-- Close button -->
-            <button class="close-btn" @click="closeOverlay">X</button>
+            <button class="close-btn" @click="closeOverlay"><font-awesome-icon
+                    :icon="['fas', 'circle-xmark']" /></button>
 
             <!-- Passenger check-off details -->
             <h3 class="title is-4">{{ $t("driver.passengersHeading") }}</h3>
@@ -11,18 +12,12 @@
                     <tr>
                         <th>{{ $t("driver.name") }}</th>
                         <th>{{ $t("driver.room") }}</th>
-                        <th>{{ $t("driver.status") }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="patient in ride.patients" :key="patient.id">
                         <td>{{ patient.name }}</td>
                         <td>{{ patient.room }}</td>
-                        <td>
-                            <button @click="toggleStatus(patient)">
-                                {{ patient.status ? $t("driver.checkedIn") : $t("driver.notCheckedIn") }}
-                            </button>
-                        </td>
                     </tr>
                 </tbody>
             </table>

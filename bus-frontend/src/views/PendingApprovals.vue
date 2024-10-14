@@ -36,19 +36,20 @@ export default {
         }
     },
     methods: {
-        async approveUser(userId) {
+        async approveUser(staffId) {  // Change the parameter name to staffId
             try {
                 const authStore = useAuthStore();
-                await axios.post('http://localhost:8000/api/approve-users/${userId}/', null, {
+                await axios.post(`http://localhost:8000/api/approve-users/${staffId}/`, null, {  // Use backticks for template literals
                     headers: {
                         Authorization: `Bearer ${authStore.token}`,
                     },
                 });
-                this.pendingUsers = this.pendingUsers.filter(user => user.id !== userId);  // Remove approved user from the list
+                this.pendingUsers = this.pendingUsers.filter(user => user.id !== staffId);  // Update filter to match staffId
             } catch (error) {
                 this.errorMessage = 'Failed to approve user.';
             }
         },
     },
+
 };
 </script>

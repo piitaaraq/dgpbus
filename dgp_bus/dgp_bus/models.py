@@ -84,6 +84,12 @@ class Schedule(models.Model):
     def __str__(self):
         return f'{self.departure_location} to {self.destination.hospital_name} on {self.day_of_week}'
 
+class Accommodation(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 class Patient(models.Model):
     name = models.CharField(max_length=255)
     room = models.CharField(max_length=100)
@@ -96,6 +102,8 @@ class Patient(models.Model):
     description = models.CharField(max_length=255, blank=True)
     phone_no = models.CharField(max_length=15, blank=True, null=True)
     has_taxi = models.BooleanField(default=False)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.name} - Room {self.room} - {self.hospital.hospital_name}'

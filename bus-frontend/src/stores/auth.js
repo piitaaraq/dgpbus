@@ -1,48 +1,78 @@
-// stores/auth.js
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';  
+import Cookies from 'js-cookie';     
 
 export const useAuthStore = defineStore({
-  id: 'auth',  // Store ID
+  id: 'auth',
 
   state: () => ({
-    token: sessionStorage.getItem('token') || null,  // Initialize token from sessionStorage
-    isAuthenticated: !!sessionStorage.getItem('token'),  // Set isAuthenticated based on token existence
+    token: Cookies.get('auth_token') || null,  // Initialize token from cookies
+    isAuthenticated: !!Cookies.get('auth_token'),  // Set isAuthenticated based on token existence
   }),
 
   actions: {
     // Handle login and store the JWT token
     async login(email, password) {
       try {
-        const response = await axios.post('http://localhost:8000/api/token/', {
+        const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/api/token/`, {
           email,
           password,
         });
 
-        this.token = response.data.access;  // Set the JWT token in the store
-        this.isAuthenticated = true;  // Mark the user as authenticated
-        sessionStorage.setItem('token', this.token);  // Store token in sessionStorage
+        this.token = response.data.access;  
+        this.isAuthenticated = true;  
+        Cookies.set('auth_token', this.token, { expires: 7 });  
       } catch (error) {
-        console.error('Login failed:', error);
         throw new Error('Login failed. Please check your credentials.');
       }
     },
 
-    // Handle logout by clearing the token from state and sessionStorage
+    // Handle logout by clearing the token from state and cookies
     logout() {
-      this.token = null;  // Clear the token from the store
-      this.isAuthenticated = false;  // Mark the user as logged out
-      sessionStorage.removeItem('token');  // Remove token from sessionStorage
+      this.token = null;  
+      this.isAuthenticated = false;  
+      Cookies.remove('auth_token');  
     },
 
-    // Restore the token from sessionStorage when the app is reloaded
+    // Restore the token from cookies when the app is reloaded
     restoreToken() {
-      const token = sessionStorage.getItem('token');
+      const token = Cookies.get('auth_token');
       if (token) {
-        this.token = token;  // Restore token to the store
-        this.isAuthenticated = true;  // Mark the user as authenticated
+
+        if (this.isTokenExpired(token)) {
+          // If token is expired, logout the user
+          this.logout();
+        } else {
+          this.token = token;  
+          this.isAuthenticated = true;  
+        }
       } else {
-        this.isAuthenticated = false;  // Ensure it's false if no token is present
+        this.isAuthenticated = false;  
+      }
+    },
+
+    // Function to check if the token is expired
+    isTokenExpired(token) {
+      try {
+        const decoded = jwtDecode(token);  // Use correct named import
+        const now = Math.floor(Date.now() / 1000);  // Current time in seconds
+        return decoded.exp < now;  // Token is expired if the expiration time is in the past
+      } catch (error) {
+        console.error('Failed to decode token or check expiration:', error);
+        return true;  // Consider token expired if decoding fails
+      }
+    },
+
+    // Optionally: Use this method to validate token with backend if needed
+    async validateTokenWithBackend() {
+      try {
+        const token = Cookies.get('auth_token');
+        const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/api/token/verify`, { token });
+        return response.status === 200;  // Return true if the token is valid
+      } catch (error) {
+        this.logout();  // Logout if the token is invalid
+        return false;
       }
     },
   },

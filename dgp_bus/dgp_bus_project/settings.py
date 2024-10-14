@@ -13,7 +13,9 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '192.168.219.181',
+    '192.168.68.63',
+    '192.168.68.55',
+    '192.168.210.192',
 ]
 
 # Installed apps for the project
@@ -24,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'dgp_bus',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -42,13 +45,28 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Celery setup
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULE = {
+    'clear-expired-values-every-30-days': {
+        'task': 'dgp_bus.tasks.clear_expired_column_values',
+        'schedule': 2592000,
+    },
+}
+
+
 # Cross-origin resource sharing (CORS) settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",  # Add your frontend domain here
-    "http://192.168.68.60:8080",  # Add your frontend domain here
+    "http://localhost:8080",  # Vue app running locally
+    "http://192.168.68.63:8080",  # Local network IP for frontend
+    "http://192.168.68.63",  # Local network IP for frontend
+    "http://192.168.68.55:8080",  # Another local network IP if needed
+    "http://192.168.68.55",  # Another local network IP if needed
+    "http://192.168.210.192",  # Another local network IP if needed
+    "http://192.168.210.192:8080",  # Another local network IP if needed
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 # REST framework settings, including JWT authentication
 REST_FRAMEWORK = {
@@ -56,7 +74,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',  # Only restrict specific views
+        'rest_framework.permissions.AllowAny',  # Only restrict specific views
     ),
 }
 

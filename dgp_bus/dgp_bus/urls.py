@@ -1,12 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    HospitalViewSet, 
+    HospitalViewSet,
+    AccommodationViewSet,
     ScheduleViewSet, 
     RideViewSet,  
     AdminApproveUserView,  
     PatientViewSet,
     RegisterUserView,
+    public_test_view,
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -15,12 +17,15 @@ router = DefaultRouter()
 
 # Registering viewsets
 router.register(r'hospitals', HospitalViewSet)
+router.register(r'accommodations', AccommodationViewSet)
 router.register(r'schedules', ScheduleViewSet)
 router.register(r'rides', RideViewSet, basename='ride')  
 router.register(r'patients', PatientViewSet, basename='patient')
 
 # URL patterns
 urlpatterns = [
+    path('api/test-public/', public_test_view),
+
     # Include all the viewset routes registered with the router under the 'api/' prefix
     path('api/', include(router.urls)),
 

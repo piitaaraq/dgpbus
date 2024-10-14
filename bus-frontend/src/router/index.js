@@ -11,11 +11,11 @@ import RidesToday from '../views/RidesToday.vue';
 import AdminDashboard from '@/views/AdminDashboard.vue';
 import BusSchedules from '@/views/BusSchedules.vue';
 import TaxiUsers from '@/views/TaxiUsers.vue';
-import RegisteredRides from '@/views/RegisteredRides.vue';
 import DriverView from '@/views/DriverView.vue';
 import TranslatorView from '@/views/TranslatorView.vue';
 import PendingApprovals from '@/views/PendingApprovals.vue';
-// import axios from 'axios';
+import PrivacyPage from '@/views/PrivacyPage.vue';
+import Cookies from 'js-cookie';  // Import js-cookie to access the token from cookies
 
 
 const routes = [
@@ -35,6 +35,17 @@ const routes = [
       { name: "login", }
     ]
   }
+  },
+  {
+    path: '/privacy',
+    name: 'PrivacyPage',
+    component: PrivacyPage,
+    meta: {
+      breadcrumbs: [
+        {name: "home", link: "/" },
+        {name : "privacy" }
+      ]
+    }
   },
   {
   path: '/registrer',
@@ -188,18 +199,6 @@ const routes = [
      },  
   },
   {
-    path: '/registered-rides',
-    name: 'RegisteredRides',
-    component: RegisteredRides,
-    meta: { requiresStaff: true,
-    breadcrumbs: [
-      { name: "home", link: "/" },
-      { name: "dashboard", link: "/dashboard" },
-      { name: "rides" }
-      ]
-     },
-  },
-  {
     path: '/driver-view',
     name: 'DriverView',
     component: DriverView,
@@ -219,10 +218,11 @@ const router = createRouter({
   routes,
 });
 
+
 router.beforeEach((to, from, next) => {
   // Check if the route requires staff permissions
   if (to.matched.some(record => record.meta.requiresStaff)) {
-    const token = sessionStorage.getItem('token');  // Get the token from localStorage
+    const token = Cookies.get('auth_token');  // Get the token from cookies
     if (!token) {
       // If no token is found, redirect to the login page
       return next('/login');

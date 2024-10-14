@@ -2,7 +2,16 @@
     "headerbar": {
         "title": "dgp ",
         "colored": "Bus",
-        "logout": "Log ud"
+        "logout": "Log ud",
+        "newRide": "Bestil kørsel",
+        "showRides": "Dagens kørsler"
+    },
+    "cookies": {
+        "header": "Brug af cookies",
+        "message": "Vi bruger cookies til at forbedre din brugeroplevelse af vores side. Ved at fortsætte, erklærer du dig enig i vores brug af cookies.",
+        "accept": "Accepter",
+        "decline": "Afvis",
+        "readmore": "Læs mere..."
     },
     "breadcrumbs": {
         "home": "Home",
@@ -20,7 +29,8 @@
         "drivers": "For chauffører",
         "ridestoday": "Dagens kørsler",
         "edit": "Rediger",
-        "schedules": "Køreplaner"
+        "schedules": "Køreplaner",
+        "privacy": "Privatlivspolitik"
     },
     "driver": {
         "heading": "Checkliste til kørsler",
@@ -49,6 +59,8 @@
     "formular": {
         "heading": "Om din lægeaftale",
         "name": "Navn",
+        "accommodation": "Indkvartering",
+        "selectAccommodation": "Hvor bor du?",
         "room": "Værelsesnummer",
         "appDate": "Dato for lægeaftale",
         "appTime": "Tidspunkt",
@@ -63,9 +75,10 @@
         "phone": "Tlf. nr."
     },
     "confirm": {
-        "para1": "Se godt efter om du har udfyldt formularen rigtigt og bekræft oplysningerne ved at sende formularen.",
+        "para1": "Se godt efter om du har udfyldt formularen rigtigt og bekræft oplysningerne ved at sende formularen. Er der en rød række på tabellen, betyder det at du ikke har udfyldt det pågældende felt. Du skal derfor gå tilbage og færdiggøre formularen.",
         "para2": "Vær opmærksom på at vi beregner tidspunktet for buskørsel, for at sikre afgnag fra patienthjemmet 30 minutter før din aftale.",
         "name": "Navn",
+        "accommodation": "Indkvartering",
         "room": "Værelsesnummer",
         "appDate": "Dato for lægeaftale",
         "appTime": "Tidspunkt",
@@ -91,6 +104,7 @@
     "taxi": {
         "heading": "Patienter med behov for taxa",
         "name": "Navn",
+        "accommodation": "Indkvartering",
         "room": "Værelsesnummer",
         "phone": "Tlf. nr.",
         "appDate": "Dato for lægeaftale",
@@ -123,6 +137,7 @@
         "Fredag": "Fredag"
     },
     "homepage": {
+    "heading": "Det grønlandske Patienthjem · Patientkørsel",
     "staffTitle": "Personaleadgang",
     "patientTitle": "Patientadgang",
     "patientDescription": "Registrer din lægeaftale."

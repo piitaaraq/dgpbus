@@ -36,8 +36,14 @@
                     <button class="button is-primary" type="submit">Registrer</button>
                 </div>
             </div>
-            <p v-if="errorMessage" class="has-text-danger">{{ errorMessage }}</p>
-            <p v-if="successMessage" class="has-text-success">{{ successMessage }}</p>
+            <div v-if="errorMessage" class="notification is-warning">
+                <button @click="goHome" class="delete"></button>
+                {{ errorMessage }}
+            </div>
+            <div v-if="successMessage" class="notification">
+                <button @click="goHome" class="delete"></button>
+                {{ successMessage }}
+            </div>
         </form>
     </div>
 </template>
@@ -58,6 +64,9 @@ export default {
         };
     },
     methods: {
+        goHome() {
+            this.$router.push({ name: 'HomePage' });
+        },
         async registerUser() {
             if (this.password !== this.confirmPassword) {
                 this.errorMessage = 'Passwords du har indtastet matcher ikke.';

@@ -66,10 +66,4 @@ export default {
 .breadcrumb li:last-child::after {
     content: none;
 }
-
-.breadcrumb li.is-active a,
-.breadcrumb li.is-active span {
-    /* font-weight: bold; */
-    /* color: #25A18E !important; */
-}
 </style>

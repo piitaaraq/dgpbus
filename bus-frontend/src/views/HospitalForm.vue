@@ -1,7 +1,7 @@
 <template>
-  <div class="hospital-form-container container">
-    <div class="explanatory-text">
-      <h2 class="title is-2">{{ $t("formular.heading") }}</h2>
+  <div class="hospital-form-container container px-3">
+    <div class="explanatory-text mb-3">
+      <h3 class="title is-3 is-size-4-mobile">{{ $t("formular.heading") }}</h3>
       <p class="is-size-4 content">
         {{ $t("hospitalform.para0", { hospital: hospitalName }) }}
       </p>
@@ -30,6 +30,20 @@
             <label class="label">{{ $t("formular.phone") }}</label>
             <div class="control">
               <input class="input is-medium" type="text" v-model="form.phone_no" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">{{ $t("formular.accommodation") }}</label>
+            <div class="control">
+              <div class="select is-medium">
+                <select v-model="form.accommodation" required>
+                  <option value="">{{ $t("formular.selectAccommodation") }}</option>
+                  <option v-for="accommodation in accommodations" :key="accommodation.id" :value="accommodation.name">
+                    {{ accommodation.name }}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -63,7 +77,7 @@
         <div class="field">
           <label class="label">{{ $t("formular.desc") }}</label>
           <div class="control">
-            <textarea class="textarea" v-model="form.description"></textarea>
+            <textarea class="textarea" v-model="form.description" required></textarea>
           </div>
         </div>
 
@@ -106,8 +120,10 @@ export default {
   data() {
     return {
       hospitalName: '',
+      accommodations: [],  // Array to hold fetched accommodations
       form: {
         name: '',
+        accommodation: '',  // Bind selected accommodation
         room: '',
         phone_no: '',
         appointment_date: '',
@@ -121,6 +137,7 @@ export default {
   },
   mounted() {
     this.fetchHospitalDetails(); // Fetch hospital details on mount
+    this.fetchAccommodations(); // Fetch accommodations on mount in order to list them in the form
   },
   methods: {
     async fetchHospitalDetails() {
@@ -131,35 +148,47 @@ export default {
         console.error('Error fetching hospital details:', error);
       }
     },
+    async fetchAccommodations() {
+      try {
+        const response = await axios.get('http://localhost:8000/api/accommodations/');
+        this.accommodations = response.data;  // Store the fetched accommodations
+      } catch (error) {
+        console.error('Error fetching accommodations:', error);
+      }
+    },
 
     async goToConfirmation() {
       const formStore = useFormStore();  // Access the Pinia store
 
-      console.log('Hospital ID:', this.id);  // Confirm the hospital ID is correct
+      // Find the accommodation by name and get its ID
+      const selectedAccommodation = this.accommodations.find(acc => acc.name === this.form.accommodation);
+      const formWithAccommodationId = {
+        ...this.form,
+        accommodation_id: selectedAccommodation ? selectedAccommodation.id : null  // Use accommodation_id
+      };
 
-      // Only calculate bus time for hospitals 1 and 8
-      if ([1, 8].includes(Number(this.form.hospital))) {
+      // Only calculate bus time for hospital 1 and when the accommodation is "Det grønlandske Patienthjem"
+      if (Number(this.form.hospital) === 1 && this.form.accommodation === 'Det grønlandske Patienthjem') {
         try {
           // Make the POST request to calculate the bus time
-          const response = await axios.post('http://localhost:8000/api/patients/calculate_bus_time/', this.form);
+          const response = await axios.post('http://localhost:8000/api/patients/calculate_bus_time/', formWithAccommodationId);
           const busTime = response.data.bus_time;
 
           // Set form data and busTime in the store
-          formStore.setFormData({ ...this.form, busTime: busTime || null });
-          console.log('FormData stored in Pinia:', formStore.formData);
+          formStore.setFormData({ ...formWithAccommodationId, busTime: busTime || null });
         } catch (error) {
           console.error('Error calculating bus time:', error);
           alert('An error occurred while calculating the bus time. Please try again.');
         }
       } else {
-        // No bus time for other hospitals
-        formStore.setFormData(this.form);
-        console.log('FormData stored in Pinia (no bus time):', formStore.formData);
+        // No bus time calculation for other hospitals or accommodations
+        formStore.setFormData(formWithAccommodationId);
       }
 
       // Navigate to the confirmation page
       this.$router.push({ name: 'ConfirmForm' });
     },
+
     goBack() {
       this.$router.push({ name: 'HospitalList' });
     },
@@ -173,7 +202,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 20px;
 }
 
 .explanatory-text {

@@ -4,33 +4,54 @@ from rest_framework.decorators import permission_classes, action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
-from .models import Hospital, Schedule, Ride, Patient, StaffAdminUser 
-from .serializers import HospitalSerializer, ScheduleSerializer, PatientSerializer, RideSerializer, StaffAdminUserSerializer, RegisterUserSerializer, RidePublicSerializer
+from .models import Hospital, Schedule, Ride, Patient, StaffAdminUser, Accommodation 
+from .serializers import HospitalSerializer, ScheduleSerializer, PatientSerializer, RideSerializer, StaffAdminUserSerializer, RegisterUserSerializer, RidePublicSerializer, ApproveUserSerializer, AccommodationSerializer
 from datetime import date, timedelta
 from .permissions import IsStaffOrAdmin, IsAdmin
 from django.contrib.auth import authenticate, login
+from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def public_test_view(request):
+    return Response({"message": "This is public"})
+
+class AccommodationViewSet(viewsets.ModelViewSet):
+    queryset = Accommodation.objects.all()
+    serializer_class = AccommodationSerializer
+    permission_classes = [AllowAny]  # You can change this based on your needs
+
 
 class AdminApproveUserView(APIView):
-    permission_classes = [IsAuthenticated, IsAdmin]  # Ensure only authenticated users can access
-    # You might want to create a custom permission to ensure only admin users can approve
+    permission_classes = [IsAuthenticated, IsAdmin]  # Ensure only authenticated admin users can access
 
     def get(self, request):
         # List all staff/admin members that are inactive (pending approval)
         pending_staff = StaffAdminUser.objects.filter(is_active=False)
-        serializer = StaffAdminUserSerializer(pending_staff, many=True)
+        serializer = StaffAdminUserSerializer(pending_staff, many=True)  # Use StaffAdminUserSerializer for listing
         return Response(serializer.data)
+    
     def post(self, request, staff_id):
-    # Admin approves the staff member by setting is_active to True
+        # Admin approves the staff member by setting is_active to True
         try:
             staff_member = StaffAdminUser.objects.get(id=staff_id, is_active=False)
-            staff_member.is_active = True
-            staff_member.save()
-            return Response({"message": f"{staff_member.email} has been approved."}, status=status.HTTP_200_OK)
+
+            # Use the ApproveUserSerializer to update the is_active field
+            serializer = ApproveUserSerializer(staff_member, data={"is_active": True}, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)  # Return the updated user info
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         except StaffAdminUser.DoesNotExist:
             return Response({"error": "Staff member not found or already active."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -66,16 +87,23 @@ class PatientViewSet(viewsets.ModelViewSet):
         serializer = PatientSerializer(patients_needing_translators, many=True)
         return Response(serializer.data)
 
-    # Staff-only access for taxi users view
+   
+
+    # Staff-only access for taxi users view - old version, that assumes the logic for bustime is fully in the backend
     @action(detail=False, methods=['get'], url_path='taxi-users')
     @permission_classes([IsAuthenticated, IsStaffOrAdmin])
     def taxi_users_view(self, request):
         today = date.today()
         tomorrow = today + timedelta(days=1)
         patients_needing_taxis = Patient.objects.filter(
-            hospital__id__in=[2, 3, 4, 5, 6, 7],
+            bus_time__isnull=True,  # we expect that patients without a bus_time need a taxi 
             appointment_date__range=[today, tomorrow],
         )
+
+        # Log to verify if bus_time is actually NULL
+        for patient in patients_needing_taxis:
+            print(f"Patient {patient.name}: bus_time = {patient.bus_time}")
+
         serializer = PatientSerializer(patients_needing_taxis, many=True)
         return Response(serializer.data)
 
@@ -100,6 +128,7 @@ class PatientViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             bus_time = serializer.calculate_bus_time(serializer.validated_data)
             return Response({'success': True, 'bus_time': bus_time})
+        print("Serializer errors:", serializer.errors)
         return Response(serializer.errors, status=400)
 
     # Allow anyone to create (register) a ride (patients)
@@ -139,19 +168,19 @@ class RideViewSet(viewsets.ModelViewSet):
     serializer_class = RideSerializer  # Default serializer with all fields
 
     @action(detail=False, methods=['get'])
-    @permission_classes([AllowAny])  # Public access allowed
+    @permission_classes([IsAuthenticated, IsStaffOrAdmin])  # Public access allowed
     def today(self, request):
         today = date.today()
-        rides = Ride.objects.filter(date=today)
+        rides = Ride.objects.filter(date=today).order_by('departure_time', 'hospital_name')
         serialized_rides = self.get_serializer(rides, many=True)
         return Response(serialized_rides.data)
 
     # New action to fetch today's rides without the description field
     @action(detail=False, methods=['get'])
-    @permission_classes([IsAuthenticated, IsStaffOrAdmin])  # Public access allowed
+    @permission_classes([AllowAny])  # Public access allowed
     def today_no_desc(self, request):
         today = date.today()
-        rides = Ride.objects.filter(date=today)
+        rides = Ride.objects.filter(date=today).order_by('departure_time')
         serialized_rides = RidePublicSerializer(rides, many=True)  # Use the serializer without description
         return Response(serialized_rides.data)
 

@@ -35,6 +35,7 @@
 
 <script>
 import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
 
 export default {
     data() {
@@ -43,6 +44,10 @@ export default {
         };
     },
     computed: {
+        authStore() {
+            return useAuthStore();
+        },
+
         // Group patients by hospital_name
         groupedPatients() {
             return this.patients.reduce((groups, patient) => {
@@ -91,15 +96,20 @@ export default {
                 return timeA - timeB; // If dates are equal, sort by time
             });
         },
+
         async fetchPatients() {
             try {
-                const token = sessionStorage.getItem('token'); // or sessionStorage if you're using it
-                const response = await axios.get('http://localhost:8000/api/patients/translator-view/', {
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Attach the JWT token
-                    }
-                });
-                this.patients = response.data;
+                const token = this.authStore.token;  // Get the token from authStore
+                if (token) {
+                    const response = await axios.get('http://localhost:8000/api/patients/translator-view/', {
+                        headers: {
+                            'Authorization': `Bearer ${token}` // Attach the JWT token
+                        }
+                    });
+                    this.patients = response.data;
+                } else {
+                    console.error('No token found. Cannot fetch patients.');
+                }
             } catch (error) {
                 console.error('Error fetching patients:', error);
             }

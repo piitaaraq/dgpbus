@@ -16,7 +16,7 @@
                     <td>{{ formatTime(ride.departure_time) }}</td>
                     <td>{{ ride.hospital_name }}</td>
                     <td>
-                        <button class="button is-primary" @click="viewPassengers(ride.id)">
+                        <button class="button is-light" @click="viewPassengers(ride.id)">
                             {{ $t("driver.viewButton") }}
                         </button>
                     </td>
@@ -32,29 +32,30 @@
                     <tr>
                         <th>{{ $t("driver.name") }}</th>
                         <th>{{ $t("driver.room") }}</th>
-                        <th>{{ $t("driver.status") }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="patient in selectedRide.patients" :key="patient.id">
                         <td>{{ patient.name }}</td>
                         <td>{{ patient.room }}</td>
-                        <td>
-                            <button @click="toggleStatus(patient)">
-                                {{ patient.status ? $t("driver.checkedIn") : $t("driver.notCheckedIn") }}
-                            </button>
-                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <!-- Ride Details Overlay -->
+        <RideDetailsOverlay v-if="selectedRide" :ride="selectedRide" @close="selectedRide = null" />
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
+import RideDetailsOverlay from '@/components/RideDetailsOverlay.vue';
 
 export default {
+    components: {
+        RideDetailsOverlay
+    },
     data() {
         return {
             rides: [],
@@ -64,17 +65,22 @@ export default {
     mounted() {
         this.fetchRides();
     },
+    computed: {
+        // Access the auth store to get the token
+        authStore() {
+            return useAuthStore();
+        },
+    },
     methods: {
         async fetchRides() {
             try {
-                const token = sessionStorage.getItem('token'); // or sessionStorage if you're using it
+                const token = this.authStore.token;  // Get the token from authStore
                 const response = await axios.get('http://localhost:8000/api/rides/driver_view/', {
                     headers: {
                         'Authorization': `Bearer ${token}` // Attach the JWT token
                     }
 
                 });
-                console.log(response.data);
                 this.rides = response.data;
             } catch (error) {
                 console.error('Error fetching rides:', error);
@@ -82,12 +88,11 @@ export default {
         },
         async viewPassengers(rideId) {
             try {
-                const token = sessionStorage.getItem('token'); // or sessionStorage if you're using it
+                const token = this.authStore.token;  // Get the token from authStore
                 const response = await axios.get(`http://localhost:8000/api/rides/${rideId}/`, {
                     headers: {
-                        'Authorization': `Bearer ${token}` // Attach the JWT token
+                        'Authorization': `Bearer ${token}`
                     }
-
                 });
                 this.selectedRide = response.data;
             } catch (error) {

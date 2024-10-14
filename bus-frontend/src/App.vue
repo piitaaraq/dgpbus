@@ -1,21 +1,23 @@
 <template>
   <div id="app" class="app-layout">
-    <HeaderBar />
-    <BreadCrumb /> <!-- Global breadcrumb component beneath the header -->
+    <HeaderBar class="has-background-primary" />
+    <BreadCrumb class="pt-3" />
     <div class="content">
-      <router-view></router-view> <!-- This is where the routed components will be displayed -->
-
+      <router-view class=""></router-view>
     </div>
+    <SiteFooter />
   </div>
 </template>
 
 <script>
 import HeaderBar from './components/HeaderBar.vue';
+import SiteFooter from './components/SiteFooter.vue';
 import BreadCrumb from './components/BreadCrumb.vue';
 export default {
   name: 'App',
   components: {
     HeaderBar,
+    SiteFooter,
     BreadCrumb
   }
 };
@@ -24,10 +26,17 @@ export default {
 <style>
 .title {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.5rem;
 }
+
 
 .body {
   font-family: 'Roboto', sans-serif;
+  color: #2C3E50;
+  background-color: #ECF0F1;
+}
+
+
+.table {
+  background-color: #ECF0F1;
 }
 </style>
