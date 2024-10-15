@@ -30,6 +30,7 @@
 
 <script>
 import axios from 'axios';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
   data() {
@@ -43,7 +44,7 @@ export default {
   methods: {
     async fetchHospitals() {
       try {
-        const response = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/hospitals/`);
+        const response = await axios.get(`${apiUrl}/api/hospitals/`);
         this.hospitals = response.data; // Assign the hospital data to the component's state
       } catch (error) {
         console.error("Error fetching hospital data:", error);

@@ -15,7 +15,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.68.63',
     '192.168.68.55',
-    '192.168.210.192',
+    '192.168.210.230',
 ]
 
 # Installed apps for the project
@@ -64,8 +64,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.68.63",  # Local network IP for frontend
     "http://192.168.68.55:8080",  # Another local network IP if needed
     "http://192.168.68.55",  # Another local network IP if needed
-    "http://192.168.210.192",  # Another local network IP if needed
-    "http://192.168.210.192:8080",  # Another local network IP if needed
+    "http://192.168.210.230",  # Another local network IP if needed
+    "http://192.168.210.230:8080",  # Another local network IP if needed
 ]
 
 # REST framework settings, including JWT authentication

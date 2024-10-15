@@ -114,6 +114,7 @@
 <script>
 import axios from 'axios';
 import { useFormStore } from '@/stores/formStore';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
   props: ['id'],
@@ -142,7 +143,7 @@ export default {
   methods: {
     async fetchHospitalDetails() {
       try {
-        const response = await axios.get(`http://localhost:8000/api/hospitals/${this.id}`);
+        const response = await axios.get(`${apiUrl}/api/hospitals/${this.id}`);
         this.hospitalName = response.data.hospital_name; // Store hospital_name
       } catch (error) {
         console.error('Error fetching hospital details:', error);
@@ -150,7 +151,7 @@ export default {
     },
     async fetchAccommodations() {
       try {
-        const response = await axios.get('http://localhost:8000/api/accommodations/');
+        const response = await axios.get(`${apiUrl}/api/accommodations/`);
         this.accommodations = response.data;  // Store the fetched accommodations
       } catch (error) {
         console.error('Error fetching accommodations:', error);
@@ -171,7 +172,7 @@ export default {
       if (Number(this.form.hospital) === 1 && this.form.accommodation === 'Det grønlandske Patienthjem') {
         try {
           // Make the POST request to calculate the bus time
-          const response = await axios.post('http://localhost:8000/api/patients/calculate_bus_time/', formWithAccommodationId);
+          const response = await axios.post(`${apiUrl}/api/patients/calculate_bus_time/`, formWithAccommodationId);
           const busTime = response.data.bus_time;
 
           // Set form data and busTime in the store

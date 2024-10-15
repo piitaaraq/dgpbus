@@ -3,6 +3,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import { useAuthStore } from './auth';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export const useAdminStore = defineStore('admin', {
     state: () => ({
@@ -12,7 +13,7 @@ export const useAdminStore = defineStore('admin', {
         async fetchPendingUsers() {
             const authStore = useAuthStore();
             try {
-                const response = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/api/approve-users/`, {
+                const response = await axios.get(`${apiUrl}/api/approve-users/`, {
                     headers: {
                         Authorization: `Bearer ${authStore.token}`,
                     },
@@ -25,7 +26,7 @@ export const useAdminStore = defineStore('admin', {
         async approveUser(userId) {
             const authStore = useAuthStore();
             try {
-                await axios.post(`${process.env.VUE_APP_BACKEND_URL}/api/approve-users/${userId}/`, null, {
+                await axios.post(`${apiUrl}/api/approve-users/${userId}/`, null, {
                     headers: {
                         Authorization: `Bearer ${authStore.token}`,
                     },

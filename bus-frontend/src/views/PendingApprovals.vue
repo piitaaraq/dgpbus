@@ -14,6 +14,7 @@
 <script>
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
     data() {
@@ -25,7 +26,7 @@ export default {
     async created() {
         try {
             const authStore = useAuthStore();
-            const response = await axios.get('http://localhost:8000/api/approve-users/', {
+            const response = await axios.get(`${apiUrl}/api/approve-users/`, {
                 headers: {
                     Authorization: `Bearer ${authStore.token}`,
                 },
@@ -39,7 +40,7 @@ export default {
         async approveUser(staffId) {  // Change the parameter name to staffId
             try {
                 const authStore = useAuthStore();
-                await axios.post(`http://localhost:8000/api/approve-users/${staffId}/`, null, {  // Use backticks for template literals
+                await axios.post(`${apiUrl}/api/approve-users/${staffId}/`, null, {  // Use backticks for template literals
                     headers: {
                         Authorization: `Bearer ${authStore.token}`,
                     },

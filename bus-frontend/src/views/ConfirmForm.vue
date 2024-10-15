@@ -73,6 +73,7 @@
 <script>
 import axios from 'axios';
 import { useFormStore } from '@/stores/formStore';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
   setup() {
@@ -87,7 +88,7 @@ export default {
       try {
 
         // Submit formData to the backend via POST request
-        await axios.post('http://localhost:8000/api/patients/', this.formData);
+        await axios.post(`${apiUrl}/api/patients/`, this.formData);
 
         // On successful submission, navigate to the homepage or a success page
         this.$router.push({ name: 'HomePage' });

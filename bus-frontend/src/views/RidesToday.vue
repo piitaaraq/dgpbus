@@ -31,6 +31,7 @@
 
 <script>
 import axios from 'axios';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
     data() {
@@ -44,7 +45,7 @@ export default {
     methods: {
         async fetchRides() {
             try {
-                const response = await axios.get('http://localhost:8000/api/rides/today_no_desc');
+                const response = await axios.get(`${apiUrl}/api/rides/today_no_desc`);
                 this.rides = response.data;
             } catch (error) {
                 console.error('Error fetching rides:', error);

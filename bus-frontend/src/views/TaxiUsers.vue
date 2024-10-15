@@ -78,6 +78,7 @@
 
 <script>
 import axios from 'axios';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
     data() {
@@ -103,7 +104,7 @@ export default {
     methods: {
         async fetchPatients() {
             try {
-                const response = await axios.get('http://localhost:8000/api/patients/taxi-users/');
+                const response = await axios.get(`${apiUrl}/api/patients/taxi-users/`);
                 this.patients = response.data;
             } catch (error) {
                 console.error('Error fetching patients:', error);
@@ -111,7 +112,7 @@ export default {
         },
         async toggleTaxi(patient) {
             try {
-                const response = await axios.patch(`http://localhost:8000/api/patients/${patient.id}/toggle-taxi/`);
+                const response = await axios.patch(`${apiUrl}/api/patients/${patient.id}/toggle-taxi/`);
                 patient.has_taxi = response.data.has_taxi;
             } catch (error) {
                 console.error('Error toggling taxi status:', error);

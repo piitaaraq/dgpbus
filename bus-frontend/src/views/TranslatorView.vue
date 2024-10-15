@@ -36,6 +36,7 @@
 <script>
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
     data() {
@@ -101,7 +102,7 @@ export default {
             try {
                 const token = this.authStore.token;  // Get the token from authStore
                 if (token) {
-                    const response = await axios.get('http://localhost:8000/api/patients/translator-view/', {
+                    const response = await axios.get(`${apiUrl}/api/patients/translator-view/`, {
                         headers: {
                             'Authorization': `Bearer ${token}` // Attach the JWT token
                         }

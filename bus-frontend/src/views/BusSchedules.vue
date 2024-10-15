@@ -40,6 +40,8 @@
 
 <script>
 import axios from 'axios';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
+
 
 export default {
     data() {
@@ -61,7 +63,7 @@ export default {
     methods: {
         async fetchSchedules() {
             try {
-                const response = await axios.get('http://localhost:8000/api/schedules/');
+                const response = await axios.get(`${apiUrl}/api/schedules/`);
                 this.schedules = response.data;
 
                 // Group schedules by departure location

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';  
 import Cookies from 'js-cookie';     
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -15,7 +16,7 @@ export const useAuthStore = defineStore({
     // Handle login and store the JWT token
     async login(email, password) {
       try {
-        const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/api/token/`, {
+        const response = await axios.post(`${apiUrl}/api/token/`, {
           email,
           password,
         });
@@ -68,7 +69,7 @@ export const useAuthStore = defineStore({
     async validateTokenWithBackend() {
       try {
         const token = Cookies.get('auth_token');
-        const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/api/token/verify`, { token });
+        const response = await axios.post(`${apiUrl}/api/token/verify`, { token });
         return response.status === 200;  // Return true if the token is valid
       } catch (error) {
         this.logout();  // Logout if the token is invalid

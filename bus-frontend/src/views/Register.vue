@@ -50,6 +50,7 @@
 
 <script>
 import axios from 'axios';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
     name: "RegisterUser",
@@ -74,7 +75,7 @@ export default {
             }
 
             try {
-                await axios.post('http://localhost:8000/api/register/', {
+                await axios.post(`${apiUrl}/api/register/`, {
                     email: this.email,
                     password: this.password,
                     role: this.role,

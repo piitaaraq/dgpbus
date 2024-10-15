@@ -51,6 +51,7 @@
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
 import RideDetailsOverlay from '@/components/RideDetailsOverlay.vue';
+const apiUrl = process.env.VUE_APP_BACKEND_URL
 
 export default {
     components: {
@@ -75,7 +76,7 @@ export default {
         async fetchRides() {
             try {
                 const token = this.authStore.token;  // Get the token from authStore
-                const response = await axios.get('http://localhost:8000/api/rides/driver_view/', {
+                const response = await axios.get(`${apiUrl}/api/rides/driver_view`, {
                     headers: {
                         'Authorization': `Bearer ${token}` // Attach the JWT token
                     }
@@ -89,7 +90,7 @@ export default {
         async viewPassengers(rideId) {
             try {
                 const token = this.authStore.token;  // Get the token from authStore
-                const response = await axios.get(`http://localhost:8000/api/rides/${rideId}/`, {
+                const response = await axios.get(`${apiUrl}/api/rides/${rideId}/`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -102,7 +103,7 @@ export default {
         async toggleStatus(patient) {
             try {
                 const token = sessionStorage.getItem('token'); // or sessionStorage if you're using it
-                const response = await axios.patch(`http://localhost:8000/api/rides/${patient.id}/toggle_status/`, {
+                const response = await axios.patch(`${apiUrl}/api/rides/${patient.id}/toggle_status/`, {
                     headers: {
                         'Authorization': `Bearer ${token}` // Attach the JWT token
                     }
