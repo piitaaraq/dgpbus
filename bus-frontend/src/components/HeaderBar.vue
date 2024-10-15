@@ -90,7 +90,7 @@ export default {
       this.$router.push({ name: 'HospitalList' });
     },
     toRides() {
-      this.$router.push({ name: 'RidesToday' });
+      this.$router.push({ name: 'RidesTodayLong' });
     },
     setLanguage(lang) {
       this.$i18n.locale = lang;

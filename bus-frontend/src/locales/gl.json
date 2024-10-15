@@ -32,6 +32,10 @@
         "schedules": "Bussit pilersaarutaat",
         "privacy": "Privatlivspolitik"
     },
+    "pagination": {
+        "previous": "siulia",
+        "next": "tullia"
+    },
     "driver": {
         "heading": "Ilaasussanik nalunaarsuineq",
         "departureTime": "Aallarfik",
@@ -100,7 +104,8 @@
         "heading": "Ullumi bussertussat",
         "bustime": "Bussit aallarfissaat",
         "name": "Ateq",
-        "room": "Inip normua"
+        "room": "Inip normua",
+        "noRides": "Ullumikkut bussertussanik nalunaarsuisoqarsimanngilaq."
     },
     "taxi": {
         "heading": "Taxamik pisariaqartitsisut",

@@ -14,6 +14,15 @@
                 </div>
 
                 <div class="column is-one-third">
+                    <div class="card is-info" @click="goToRidesLong">
+                        <div class="card-content">
+                            <p class="title is-5">Dagens kørsler - lang liste</p>
+                            <p>Vis alle kørsler for i dag i en lang liste</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-one-third">
                     <div class="card is-primary" @click="goToBusSchedules">
                         <div class="card-content">
                             <p class="title is-5">Køreplaner for bussen</p>
@@ -67,6 +76,9 @@ export default {
     methods: {
         goToTodayRides() {
             this.$router.push({ name: 'RidesToday' });
+        },
+        goToRidesLong() {
+            this.$router.push({ name: 'RidesTodayLong' });
         },
         goToBusSchedules() {
             this.$router.push({ name: 'BusSchedules' });

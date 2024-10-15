@@ -1,4 +1,7 @@
 dgpbusses/
 bus-frontend/node_modules/.cache/
+bus-frontend/.env.production
+bus-frontend/.env.development
 dgp_bus/dgp_bus/__pycache__/
 dgp_bus/venv/
+dgp_bus/.env

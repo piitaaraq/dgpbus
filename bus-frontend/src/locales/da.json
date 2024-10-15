@@ -32,6 +32,10 @@
         "schedules": "Køreplaner",
         "privacy": "Privatlivspolitik"
     },
+    "pagination": {
+        "previous": "forrige",
+        "next": "næste"
+    },
     "driver": {
         "heading": "Checkliste til kørsler",
         "departureTime": "Afgang",
@@ -99,7 +103,8 @@
         "heading": "Dagens buskørsler",
         "bustime": "Afgangstid",
         "name": "Navn",
-        "room": "Værelsesnummer"
+        "room": "Værelsesnummer",
+        "noRides": "Ingen kørsler registreret for i dag."
     },
     "taxi": {
         "heading": "Patienter med behov for taxa",

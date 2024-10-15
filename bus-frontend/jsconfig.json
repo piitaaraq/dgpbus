@@ -9,11 +9,15 @@
         "src/*"
       ]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
-  }
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "lib": [
+    "esnext",
+    "dom",
+    "dom.iterable"
+  ]
 }

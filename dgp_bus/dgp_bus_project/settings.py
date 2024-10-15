@@ -1,22 +1,18 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+from decouple import config
 
 # BASE_DIR is the directory that holds the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET KEY and DEBUG mode
-SECRET_KEY = 'django-insecure-ks=1)p43w!y!=y-wf13m8*vwmxsr@@dp#a=0hx44h2*=n(!j!m'
-DEBUG = True
+SECRET_KEY = config('DJANGO_SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Allowed hosts
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '192.168.68.63',
-    '192.168.68.55',
-    '192.168.210.230',
-]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
+
 
 # Installed apps for the project
 INSTALLED_APPS = [
@@ -113,11 +109,11 @@ WSGI_APPLICATION = 'dgp_bus_project.wsgi.application'
 # Database settings
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'busrides',
-        'USER': 'peter',
-        'PASSWORD': 'peter',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST', default='localhost'),
         'PORT': '3306',
     }
 }

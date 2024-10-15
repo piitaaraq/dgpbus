@@ -16,6 +16,7 @@ import TranslatorView from '@/views/TranslatorView.vue';
 import PendingApprovals from '@/views/PendingApprovals.vue';
 import PrivacyPage from '@/views/PrivacyPage.vue';
 import Cookies from 'js-cookie';  // Import js-cookie to access the token from cookies
+import RidesTodayLong from '@/views/RidesTodayLong.vue';
 
 
 const routes = [
@@ -112,6 +113,18 @@ const routes = [
     ]
 
   }
+  },
+  {
+    path: '/rides-today-long',
+    name: 'RidesTodayLong',
+    component: RidesTodayLong,
+    meta: {
+      breadcrumbs: [
+        { name: "home", link: "/" },
+        { name: "dashboard", link: "/dashboard" },
+        { name: "ridestoday" }
+      ]
+    }
   },
   {
     path: '/rides-today',
