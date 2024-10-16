@@ -41,7 +41,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Celery setup
+# Celery setup - clear information after 30 days
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
@@ -54,15 +54,8 @@ CELERY_BEAT_SCHEDULE = {
 
 
 # Cross-origin resource sharing (CORS) settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",  # Vue app running locally
-    "http://192.168.68.63:8080",  # Local network IP for frontend
-    "http://192.168.68.63",  # Local network IP for frontend
-    "http://192.168.68.55:8080",  # Another local network IP if needed
-    "http://192.168.68.55",  # Another local network IP if needed
-    "http://192.168.210.230",  # Another local network IP if needed
-    "http://192.168.210.230:8080",  # Another local network IP if needed
-]
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='').split(',')
+
 
 # REST framework settings, including JWT authentication
 REST_FRAMEWORK = {

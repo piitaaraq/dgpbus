@@ -23,25 +23,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!-- Passenger check-off -->
-        <div v-if="selectedRide">
-            <h3 class="title is-4">{{ $t("driver.passengersHeading") }}</h3>
-            <table class="table is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>{{ $t("driver.name") }}</th>
-                        <th>{{ $t("driver.room") }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="patient in selectedRide.patients" :key="patient.id">
-                        <td>{{ patient.name }}</td>
-                        <td>{{ patient.room }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
         <!-- Ride Details Overlay -->
         <RideDetailsOverlay v-if="selectedRide" :ride="selectedRide" @close="selectedRide = null" />
     </div>
