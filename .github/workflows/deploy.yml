@@ -40,7 +40,7 @@ jobs:
     # Copy the .env file for Django (before running migrations or collectstatic)
     - name: Copy .env file for Django
       run: |
-        cp /home/peter/envs/backend/.env /var/www/dgp_bus/.env  # Make sure the path to .env is correct
+        cp /home/peter/envs/backend/.env /var/www/dgpbus/dgp_bus/.env  # Make sure the path to .env is correct
 
     # Install Django dependencies
     - name: Install dependencies for Django app
