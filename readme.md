@@ -50,5 +50,6 @@ This project is designed to help manage hospital appointments and rides for pati
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/piitaaraq/dgpbus.git
-   cd project-name/backend
+   cd dgpbus/bus-frontend
+   npm run build
 
