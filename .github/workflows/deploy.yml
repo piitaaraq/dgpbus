@@ -11,13 +11,13 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Updated to v3
 
     # Set up Node.js for Vue app
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3  # Updated to v3
       with:
-        node-version: '22.x'
+        node-version: '22.x'  # Match the Node.js version on your droplet
 
     # Install Vue app dependencies
     - name: Install dependencies for Vue app
@@ -33,14 +33,14 @@ jobs:
 
     # Set up Python for Django app
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v4  # Updated to v4
       with:
-        python-version: '3.10.12'
+        python-version: '3.10.12'  # Match the Python version on your droplet
 
     # Install Django dependencies
     - name: Install dependencies for Django app
       run: |
-        cd dgp_bus # Navigate to your Django app directory
+        cd dgp_bus  # Navigate to your Django app directory
         pip install -r requirements.txt
 
     # Run Django migrations
@@ -63,24 +63,24 @@ jobs:
         username: ${{ secrets.DROPLET_USER }}  # Your droplet's SSH username
         key: ${{ secrets.DROPLET_SSH_KEY }}  # Your SSH private key (stored in GitHub secrets)
         script: |
-          cd /var/www/dgpbus  # Navigate to your droplet's project directory
+          cd /var/www  # Navigate to your droplet's project directory
           git pull origin main  # Pull the latest changes
           source venv/bin/activate  # Activate virtual environment
+          
+          # Django backend deployment
           cd dgp_bus && python manage.py migrate  # Apply migrations
           cd dgp_bus && python manage.py collectstatic --noinput  # Collect static files
           sudo systemctl restart gunicorn  # Restart the Gunicorn server for Django app
+          
+          # Build Vue app on the server
           cd bus-frontend && npm run build  # Build the Vue app on the server
           
           # Copy the .env file for Django
-          cp /home/peter/envs/backend/.env /var/www/dgpbus/dgp_bus/.env
+          cp /home/peter/envs/backend/.env /var/www/dgp_bus/.env
 
-          sudo systemctl restart gunicorn  # Restart the Gunicorn server for Django app
+          # Frontend deployment
+          sudo cp -R /var/www/bus-frontend/dist/* /var/www/html/
 
-          # Frontend deployment steps
-          cd bus-frontend && npm run build  # Build the Vue app on the server
-
-          # Copy the built Vue app to /var/www/html
-          sudo cp -R /var/www/dgpbus/bus-frontend/dist/* /var/www/html/
-
+          # Restart Nginx after deploying frontend
           sudo systemctl restart nginx  # Restart Nginx
 
