@@ -67,6 +67,9 @@ jobs:
           git pull origin main  # Pull the latest changes
           source venv/bin/activate  # Activate virtual environment
           
+          # Copy the .env file for Django
+          cp /home/peter/envs/backend/.env /var/www/dgp_bus/.env
+          
           # Django backend deployment
           cd dgp_bus && python manage.py migrate  # Apply migrations
           cd dgp_bus && python manage.py collectstatic --noinput  # Collect static files
@@ -75,8 +78,6 @@ jobs:
           # Build Vue app on the server
           cd bus-frontend && npm run build  # Build the Vue app on the server
           
-          # Copy the .env file for Django
-          cp /home/peter/envs/backend/.env /var/www/dgp_bus/.env
 
           # Frontend deployment
           sudo cp -R /var/www/bus-frontend/dist/* /var/www/html/
