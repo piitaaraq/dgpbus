@@ -37,6 +37,11 @@ jobs:
       with:
         python-version: '3.10.12'  # Match the Python version on your droplet
 
+    # Copy the .env file for Django (before running migrations or collectstatic)
+    - name: Copy .env file for Django
+      run: |
+        cp /home/peter/envs/backend/.env /var/www/dgp_bus/.env  # Make sure the path to .env is correct
+
     # Install Django dependencies
     - name: Install dependencies for Django app
       run: |
@@ -67,9 +72,6 @@ jobs:
           git pull origin main  # Pull the latest changes
           source venv/bin/activate  # Activate virtual environment
           
-          # Copy the .env file for Django
-          cp /home/peter/envs/backend/.env /var/www/dgp_bus/.env
-          
           # Django backend deployment
           cd dgp_bus && python manage.py migrate  # Apply migrations
           cd dgp_bus && python manage.py collectstatic --noinput  # Collect static files
@@ -77,11 +79,9 @@ jobs:
           
           # Build Vue app on the server
           cd bus-frontend && npm run build  # Build the Vue app on the server
-          
 
-          # Frontend deployment
+          # Copy the built Vue app to /var/www/html
           sudo cp -R /var/www/bus-frontend/dist/* /var/www/html/
 
-          # Restart Nginx after deploying frontend
           sudo systemctl restart nginx  # Restart Nginx
 
