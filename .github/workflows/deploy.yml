@@ -11,18 +11,18 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3  # Ensure you're using the latest version
+      uses: actions/checkout@v3
 
     # Set up Node.js for Vue app
     - name: Set up Node.js
-      uses: actions/setup-node@v3  # Ensure you're using the latest version
+      uses: actions/setup-node@v3
       with:
         node-version: '20.x'  # Use Node.js 20
 
     # Install Vue app dependencies
     - name: Install dependencies for Vue app
       run: |
-        cd bus-frontend  # Navigate to your Vue app directory
+        cd bus-frontend
         npm install
 
     # Build Vue app
@@ -33,19 +33,23 @@ jobs:
 
     # Set up Python for Django app
     - name: Set up Python
-      uses: actions/setup-python@v4  # Ensure you're using the latest version
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.10.12'  # Match the Python version on your droplet
+        python-version: '3.10.12'
 
-    # Copy the .env file for Django (before running migrations or collectstatic)
-    - name: Copy .env file for Django
+    # Write the .env file using GitHub Secrets
+    - name: Write .env file
       run: |
-        cp /home/peter/envs/backend/.env /var/www/dgpbus/dgp_bus/.env  # Make sure the path to .env is correct
+        echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> /var/www/dgpbus/dgp_bus/.env
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> /var/www/dgpbus/dgp_bus/.env
+        echo "DB_USER=${{ secrets.DB_USER }}" >> /var/www/dgpbus/dgp_bus/.env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> /var/www/dgpbus/dgp_bus/.env
+        echo "DB_HOST=${{ secrets.DB_HOST }}" >> /var/www/dgpbus/dgp_bus/.env
 
     # Install Django dependencies
     - name: Install dependencies for Django app
       run: |
-        cd dgp_bus  # Navigate to your Django app directory
+        cd dgp_bus
         pip install -r requirements.txt
 
     # Run Django migrations
@@ -64,24 +68,19 @@ jobs:
     - name: Deploy to Droplet via SSH
       uses: appleboy/ssh-action@v0.1.4
       with:
-        host: ${{ secrets.DROPLET_IP }}  # Your droplet's IP
-        username: ${{ secrets.DROPLET_USER }}  # Your droplet's SSH username
-        key: ${{ secrets.DROPLET_SSH_KEY }}  # Your SSH private key (stored in GitHub secrets)
+        host: ${{ secrets.DROPLET_IP }}
+        username: ${{ secrets.DROPLET_USER }}
+        key: ${{ secrets.DROPLET_SSH_KEY }}
         script: |
-          cd /var/www  # Navigate to your droplet's project directory
-          git pull origin main  # Pull the latest changes
-          source venv/bin/activate  # Activate virtual environment
+          cd /var/www
+          git pull origin main
+          source venv/bin/activate
           
-          # Django backend deployment
-          cd dgp_bus && python manage.py migrate  # Apply migrations
-          cd dgp_bus && python manage.py collectstatic --noinput  # Collect static files
-          sudo systemctl restart gunicorn  # Restart the Gunicorn server for Django app
+          cd dgp_bus && python manage.py migrate
+          cd dgp_bus && python manage.py collectstatic --noinput
+          sudo systemctl restart gunicorn
           
-          # Build Vue app on the server
-          cd bus-frontend && npm run build  # Build the Vue app on the server
-
-          # Copy the built Vue app to /var/www/html
+          cd bus-frontend && npm run build
           sudo cp -R /var/www/bus-frontend/dist/* /var/www/html/
-
-          sudo systemctl restart nginx  # Restart Nginx
+          sudo systemctl restart nginx
 
