@@ -13,63 +13,31 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # Set up Node.js for Vue app
+    # Set up Node.js for Vue app (local to the GitHub runner)
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '20.x'
 
-    # Install Vue app dependencies
+    # Install Vue app dependencies (on the GitHub runner)
     - name: Install dependencies for Vue app
       run: |
         cd bus-frontend
         npm install
 
-    # Build Vue app
+    # Build Vue app (on the GitHub runner)
     - name: Build Vue app
       run: |
         cd bus-frontend
         npm run build
 
-    # Set up Python for Django app
+    # Set up Python for Django app (on the GitHub runner)
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10.12'
 
-    # Write the .env file using GitHub Secrets to the correct path
-    #    - name: Write .env file
-    #      run: |
-    #        echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "DJANGO_DEBUG=${{ secrets.DJANGO_DEBUG }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "DB_NAME=${{ secrets.DB_NAME }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "DB_USER=${{ secrets.DB_USER }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "DB_HOST=${{ secrets.DB_HOST }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "STATIC_URL=${{ secrets.STATIC_URL }}" >> /var/www/dgpbus/dgp_bus/.env
-    #        echo "STATIC_ROOT=${{ secrets.STATIC_ROOT }}" >> /var/www/dgpbus/dgp_bus/.env
-
-    # Install Django dependencies
-    - name: Install dependencies for Django app
-      run: |
-        cd dgpbus/dgp_bus
-        pip install -r requirements.txt
-
-    # Run Django migrations
-    - name: Apply Django migrations
-      run: |
-        cd dgpbus/dgp_bus
-        python manage.py migrate
-
-    # Collect Django static files
-    - name: Collect static files for Django
-      run: |
-        cd dgpbus/dgp_bus
-        python manage.py collectstatic --noinput
-
-    # Deploy to the server
+    # SSH into your droplet to deploy (remote execution)
     - name: Deploy to Droplet via SSH
       uses: appleboy/ssh-action@v0.1.4
       with:
@@ -77,15 +45,20 @@ jobs:
         username: ${{ secrets.DROPLET_USER }}
         key: ${{ secrets.DROPLET_SSH_KEY }}
         script: |
-          cd /var/www
-          git pull origin main
-          source dgpbus/dgp_bus/venv/bin/activate  # Activate the virtual environment with the correct path
+          cd /var/www  # On the remote droplet
+          git pull origin main  # Pull the latest changes
+          source dgpbus/dgp_bus/venv/bin/activate  # Activate the virtual environment on the droplet
           
+          # cp env file
+          cp /home/peter/envs/backend/.env /var/www/dgpbus/dgp_bus/.env
+
+          # Django backend deployment
           cd dgpbus/dgp_bus && python manage.py migrate
           cd dgpbus/dgp_bus && python manage.py collectstatic --noinput
           sudo systemctl restart gunicorn
           
+          # Build Vue app on the droplet
           cd bus-frontend && npm run build
-          sudo cp -R /var/www/bus-frontend/dist/* /var/www/html/
+          sudo cp -R /var/www/dgpbus/bus-frontend/dist/* /var/www/html/
           sudo systemctl restart nginx
 
