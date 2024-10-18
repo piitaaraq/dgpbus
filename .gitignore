@@ -6,3 +6,4 @@ dgp_bus/dgp_bus/__pycache__/
 dgp_bus/dgp_bus_project/__pycache__/
 dgp_bus/venv/
 dgp_bus/.env
+scripts/
