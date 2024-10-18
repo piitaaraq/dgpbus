@@ -1,0 +1,86 @@
+name: Deploy Vue and Django Apps
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    # Set up Node.js for Vue app
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.x'
+
+    # Install Vue app dependencies
+    - name: Install dependencies for Vue app
+      run: |
+        cd bus-frontend  # Navigate to your Vue app directory
+        npm install
+
+    # Build Vue app
+    - name: Build Vue app
+      run: |
+        cd bus-frontend
+        npm run build
+
+    # Set up Python for Django app
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    # Install Django dependencies
+    - name: Install dependencies for Django app
+      run: |
+        cd dgp_bus # Navigate to your Django app directory
+        pip install -r requirements.txt
+
+    # Run Django migrations
+    - name: Apply Django migrations
+      run: |
+        cd dgp_bus
+        python manage.py migrate
+
+    # Collect Django static files
+    - name: Collect static files for Django
+      run: |
+        cd dgp_bus
+        python manage.py collectstatic --noinput
+
+    # Deploy to the server
+    - name: Deploy to Droplet via SSH
+      uses: appleboy/ssh-action@v0.1.4
+      with:
+        host: ${{ secrets.DROPLET_IP }}  # Your droplet's IP
+        username: ${{ secrets.DROPLET_USER }}  # Your droplet's SSH username
+        key: ${{ secrets.DROPLET_SSH_KEY }}  # Your SSH private key (stored in GitHub secrets)
+        script: |
+          cd /var/www/dgpbus  # Navigate to your droplet's project directory
+          git pull origin main  # Pull the latest changes
+          source venv/bin/activate  # Activate virtual environment
+          cd dgp_bus && python manage.py migrate  # Apply migrations
+          cd dgp_bus && python manage.py collectstatic --noinput  # Collect static files
+          sudo systemctl restart gunicorn  # Restart the Gunicorn server for Django app
+          cd bus-frontend && npm run build  # Build the Vue app on the server
+          
+          # Copy the .env file for Django
+          cp /home/peter/envs/backend/.env /var/www/dgpbus/dgp_bus/.env
+
+          sudo systemctl restart gunicorn  # Restart the Gunicorn server for Django app
+
+          # Frontend deployment steps
+          cd bus-frontend && npm run build  # Build the Vue app on the server
+
+          # Copy the built Vue app to /var/www/html
+          sudo cp -R /var/www/dgpbus/bus-frontend/dist/* /var/www/html/
+
+          sudo systemctl restart nginx  # Restart Nginx
+
