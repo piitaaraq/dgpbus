@@ -45,16 +45,16 @@ jobs:
         username: ${{ secrets.DROPLET_USER }}
         key: ${{ secrets.DROPLET_SSH_KEY }}
         script: |
-          cd /var/www  # On the remote droplet
+          cd /var/www/dgpbus  # On the remote droplet
           git pull origin main  # Pull the latest changes
-          source dgpbus/dgp_bus/venv/bin/activate  # Activate the virtual environment on the droplet
+          source dgp_bus/venv/bin/activate  # Activate the virtual environment on the droplet
           
           # cp env file
           cp /home/peter/envs/backend/.env /var/www/dgpbus/dgp_bus/.env
 
           # Django backend deployment
-          cd dgpbus/dgp_bus && python manage.py migrate
-          cd dgpbus/dgp_bus && python manage.py collectstatic --noinput
+          cd dgp_bus && python manage.py migrate
+          cd dgp_bus && python manage.py collectstatic --noinput
           sudo systemctl restart gunicorn
           
           # Build Vue app on the droplet
