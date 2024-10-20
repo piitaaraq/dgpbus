@@ -47,7 +47,7 @@ jobs:
         script: |
           cd /var/www/dgpbus  # On the remote droplet
           git pull origin main  # Pull the latest changes
-          source dgp_bus/venv/bin/activate  # Activate the virtual environment on the droplet
+          source /var/www/dgpbus/dgp_bus/venv/bin/activate  # Activate the virtual environment on the droplet
           
           # cp env file
           cp /home/peter/envs/backend/.env /var/www/dgpbus/dgp_bus/.env
