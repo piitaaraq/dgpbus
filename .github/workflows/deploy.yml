@@ -50,6 +50,7 @@ jobs:
           cd /var/www/dgpbus/dgp_bus
           python3 -m venv venv
           source /var/www/dgpbus/dgp_bus/venv/bin/activate  # Activate the virtual environment on the droplet
+          pip install -r /var/www/dgpbus/dgp_bus/requirements.txt
           
           # cp env file
           cp /home/peter/envs/backend/.env /var/www/dgpbus/dgp_bus/.env
