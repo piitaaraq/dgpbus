@@ -6,6 +6,7 @@ import { createI18n } from 'vue-i18n';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from './App.vue';
 import router from './router'; // Import the router
+import { setupAxiosCsrf } from './services/csrf'; // Import CSRF setup
 import './styles/custom-bulma.css'; // Import the custom Bulma file
 import gl from './locales/gl.json';
 import da from './locales/da.json';
@@ -21,6 +22,9 @@ const i18n = createI18n({
     da
   }
 });
+
+// Set up CSRF token for Axios requests
+setupAxiosCsrf();
 
 // Add icons to the library
 library.add(faGlobe, faLanguage, faSignOutAlt, faBus, faCircleXmark, faClock, faCopyright);
