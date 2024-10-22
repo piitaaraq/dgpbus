@@ -6,6 +6,16 @@ from decouple import config
 # BASE_DIR is the directory that holds the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+if os.environ.get('DJANGO_ENV') == 'production':
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+else:
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    SECURE_SSL_REDIRECT = False
+
+
 # SECRET KEY and DEBUG mode
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
