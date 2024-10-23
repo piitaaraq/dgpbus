@@ -6,7 +6,7 @@ import { createI18n } from 'vue-i18n';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from './App.vue';
 import router from './router'; // Import the router
-import { setupAxiosCsrf } from './services/csrf'; // Import CSRF setup
+import { setupAxiosCsrf } from '../services/csrf'; // Import CSRF setup
 import './styles/custom-bulma.css'; // Import the custom Bulma file
 import gl from './locales/gl.json';
 import da from './locales/da.json';
